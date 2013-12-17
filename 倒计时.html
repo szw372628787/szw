@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'/>
+  <title></title>
+</head>
+<body>
+ <div id="box"></div>
+</body>
+<script>
+	setInterval(function(){
+		var box1 = document.getElementById("box")
+		var time = new Date(2014,0,30)
+		var zongshu = time.getTime()
+		var time1 = new Date()
+		var zongshu1 = time1.getTime()
+		var chazhi = zongshu - zongshu1
+		var ri = Math.floor(chazhi/(1000*60*60*24))
+		var hour = Math.floor(chazhi/(1000*60*60))%24
+		var fen = Math.floor(chazhi/(1000*60))%60
+		var miao = Math.floor(chazhi/(1000))%60
+		var ri1 = time1.getDate()	
+		box.innerHTML= "离过年还有"+":"+ ri+"天"+":"+hour+"小时"+":"+fen+"分钟"+":"+miao+"秒"
+	},1000)
+</script>
+</html>
+
+
