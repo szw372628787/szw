@@ -11,9 +11,9 @@ body{background:url("zc_bj.jpg") -300px -100px;font-family:"微软雅黑"}
 #box{width:900px;height:800px;margin:0 auto;background:#fff}
 #top{width:900px;height:40px;line-height:40px}
 #topa{float:right;margin-right:10px}
-#content{width:900px;height:760px;background:#dbdbdb}
-#left{width:550px;height:760px;float:left;overflow:auto}
-#right{width:300px;height:760px;background:#fff;float:right;border:1px solid #ccc;overflow:auto}
+#content{width:900px;height:780px;background:#dbdbdb}
+#left{width:550px;height:740px;float:left;}
+#right{width:300px;height:740px;background:#fff;float:right;border:1px solid #ccc;overflow:auto}
 #text{width:500px;height:200px;margin:20px 25px;float:left }
 #ul1,#ul2{list-style:none;}
 #left #ul1 li{width:500px;height:40px;background:#fff;float:left;margin:10px 25px}
@@ -21,83 +21,86 @@ body{background:url("zc_bj.jpg") -300px -100px;font-family:"微软雅黑"}
 #butfb{float:right;margin-right:20px}
 </style>
 <body>
- <div id="box">
- <div id="top">
- <a id="topa">退出</a>
- </div>
- <div id="content">
- <div id="left"><textarea id="text"></textarea>
- <input type="button" value="发布" id="butfb"/>
- <ul id="ul1">
- </ul>
- </div>
- <div id="right">
- <h3>我的好友</h3>
- <ul id="ul2">
- </ul>
- </div>
- </div>
- </div>
- <script>
-		
-		$("#topa").click(function(){
-		
-			var script = document.createElement("script");
-			script.src = "http://ajaxh518.taobaoxyz.com/api/user/?method=logout&jsoncb=asd"
-			document.body.appendChild(script)
-		
-		})
-		
-		function asd(data){
+		 <div id="box">
+			 <div id="top">
+				 <b id="nihao">你好</b>
+				 <a id="topa">退出</a>
+			 </div>
+			 <div id="content">
+				 <div id="left">
+						 <textarea id="text"></textarea>
+						 <input type="button" value="发布" id="butfb"/>
+						 <ul id="ul1">
+
+						 </ul>
+						<div style="float:left">
+							<input type="button" value="上一页" id="syy"/>
+							<input type="button" value="下一页" id="xyy"/>
+						</div>
+				 </div>
+				 <div id="right">
+					<h3>我的好友</h3>
+					 <ul id="ul2">
+					 </ul>
+				 </div>
+			 </div>
+		 </div>
+		 <script>
+			
+			$("#topa").click(function(){
+			
+				var script = document.createElement("script");
+				script.src = "http://ajaxh518.taobaoxyz.com/api/user/?method=logout&jsoncb=asd"
+				document.body.appendChild(script)
+			
+			})
+			
+			function asd(data){
+					if(data.done){
+						location.href="注册页面.html"
+					}
+			}
+			
+			
+			$("#butfb").click(function(){
+			
+				var script = document.createElement("script");
+				script.src = "http://ajaxh518.taobaoxyz.com/api/msg/?method=add&jsoncb=zxc&text="+$("#text").val()
+				document.body.appendChild(script)
+			
+			})
+			
+			function zxc(data){
+			
 				if(data.done){
-					location.href="注册页面.html"
+		
+					var li = document.createElement("li")
+					
+					li.innerText = $("#text").val()
+
+					 $("#ul1").prepend(li)
+
+					
+					
+				}else{
+				
+					if(data.code == 0 ){
+						alert("未登录")
+					}
+					
+					if(data.code == 1 ){
+						alert("没有权限")
+					}
+
+					
+					if(data.code == 2 ){
+						alert("其他错误")
+					}
 				}
-		}
-		
-		
-		$("#butfb").click(function(){
-		
-			var script = document.createElement("script");
-			script.src = "http://ajaxh518.taobaoxyz.com/api/msg/?method=add&jsoncb=zxc&text="+$("#text").val()
-			document.body.appendChild(script)
-		
-		})
-		
-		function zxc(data){
-		
-			if(data.done){
-	
-				var li = document.createElement("li")
-				
-				li.innerText = $("#text").val()
-
-				 $("#ul1").prepend(li)
-
-				
-				
+			
+			
 			}
 			
-			else{
-			
-				if(data.code == 0 ){
-					alert("未登录")
-				}
-				
-				if(data.code == 1 ){
-					alert("没有权限")
-				}
-
-				
-				if(data.code == 2 ){
-					alert("其他错误")
-				}
-			}
-		
-		
-		}
-		
-		
-
 			var script = document.createElement("script");
 			script.src = "http://ajaxh518.taobaoxyz.com/api/user/?method=listuser&jsoncb=hy&page=0&count=data.data"
 			document.body.appendChild(script)
@@ -106,20 +109,88 @@ body{background:url("zc_bj.jpg") -300px -100px;font-family:"微软雅黑"}
 			
 				if(data.done){
 				
-				for(var i = 0; i < data.data.length;i++){
-							$("<li>"+data.data[i].name+"</li>").appendTo("#ul2");
-						}
-
+					for(var i = 0; i < data.data.length;i++){
+					
+						$("<li uid1="+data.data[i]._id+">"+data.data[i].name+"</li>").appendTo("#ul2");
+						
+						
+			
+					}
+					
+					$("li").click(function(){
+					
+							var uid2=$(this).attr("uid1")
+							console.log(uid)
+							mylb(0,uid2)
+							
+							
+					})
 				}
 
 			
 			}
 		
+			var uid
+			var script = document.createElement("script");
+			script.src = "http://ajaxh518.taobaoxyz.com/api/user/?method=getinfo&jsoncb=xx"
+			document.body.appendChild(script)
+
+			function xx(data){
 			
+				if(data.done){
+					uid = data.data._id
+					mylb(ppp,uid)
+					$("#nihao").text("你好"+data.data.name) 
+				
+				}
+			
+			}
+				
+			function mylb(ppp,myid){
+				 
+				var script = document.createElement("script");
+				script.src = "http://ajaxh518.taobaoxyz.com/api/msg/?method=list&jsoncb=lb&page="+ppp+"&count=8&uid="+myid
+				document.body.appendChild(script)
+
+				
+			}
+			var ppp=0
+			$("#syy").click(function(){
+				
+				ppp--
+				mylb(ppp,uid)
+				
+			
+			
+			})
+			$("#xyy").click(function(){
+				
+				ppp++
+				mylb(ppp,uid)
+				
+
+			})
+			function lb(data){
+				
+				if(data.done){
+					$("#ul1 li").remove()
+					for(var i=0;i<data.data.length;i++){
+						var time = new Date(data.data[i].time)
+						var n = time.getFullYear()
+						var y = time.getMonth()+1
+						var r = time.getDate()
+						var h = time.getHours()
+						var f = time.getMinutes()
+						var m = time.getSeconds()
+						$("<li>"+data.data[i].text+"</br>"+n+"-"+y+"-"+r+"-"+h+":"+f+":"+m+"</li>").appendTo("#ul1");
+					}
+			
+				}
+
+			}
 
 		
-
- </script>
+		 </script>
 </body>
 </html>
 
