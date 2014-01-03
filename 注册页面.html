@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'/>
+  <title></title>
+<script src="jquery-1.10.2.js"></script>
+<style>
+*{margin:0;padding:0}
+ul li{list-style:none}
+body{background:url("zc_bj.jpg") -300px -100px}
+#warp{width:400px; height:300px;margin:0 auto;border-radius:50%;background:#fff}
+#box{width:400px; height:300px;margin:0 auto;border-radius:50%;}
+ul{padding:50px 0 0 50px;margin-top:20px;}
+li{margin-top:20px;float:left;height:50px;color:#fff}
+input{width:240px;border:1px #ccc solid; border-radius:10px;height:30px}
+#zcym{width:500px;height:500px;background:#000033;position:absolute;top:40px;left:35%;border-radius:20px;display:none;}
+</style>
+<body>
+<div id ="box">
+<ul>
+<li>账户：<input type="text" value="" id="zh1"/></li>
+<li>密码：<input type="password" value="" id="mm1"/></li>
+<li><input type="button" value="登陆" id="but1" style="width:95px;margin:0 50px 0"/></li>
+<li><input type="button" value="注册" id="but2" style="width:95px"/></li>
+</ul>
+<div>
+<div id="zcym">
+<ul>
+<li>账户：<input type="text" value="" id="zh"/></li>
+<li>密码：<input type="password" value="" id="mm"/></li>
+<li style="margin-left:50px"><input type="button" value="立即注册" id="zccg"/></li>
+<li style="margin-left:50px"><input type="button" value="返回登陆" id="fhdl"/></li>
+</ul>
+</div>
+<script>
+	$("#but2").click(function(){
+	
+		$("#zcym").show()	
+
+			$("#zccg").click(function(){
+				var script = document.createElement("script");
+				script.src="http://ajaxh518.taobaoxyz.com/api/user/?method=regist&jsoncb=abc&name="+$('#zh').val()+"&password="+$('#mm').val();
+				document.body.appendChild(script)
+
+				
+			})	
+
+	})
+	$("#fhdl").click(function(){
+	
+		$("#zcym").hide()
+	
+	})
+
+		function abc(data){
+					if(data.done){
+						alert("注册成功")
+						$("#zh").prop("value","")
+						$("#mm").prop("value","")
+						$("#zcym").hide()	
+						
+
+					}	
+					else{
+						if(data.code == 0 ){
+							alert("位置错误")
+						}				
+						if(data.code == 1){
+							 alert("填写不全如缺少用户名密码")
+						}
+						if(data.code ==2){
+							alert("用户名重复")
+						}
+					
+					}
+				
+				}
+		
+
+		$("#but1").click(function(){
+		
+			var script = document.createElement("script")
+			script.src="http://ajaxh518.taobaoxyz.com/api/user/?method=login&jsoncb=qwe&name="+$('#zh1').val()+"&password="+$('#mm1').val();
+			document.body.appendChild(script)
+			console.log(script.src)
+		
+		})
+		
+		function qwe(data){
+		
+			if(data.done){
+			
+				alert("登陆成功")
+				location.href="个人中心.html"
+				
+			}
+			else{
+			
+				if(data.code == 0){
+				
+					alert("用户名密码不对")
+				
+				}
+			
+				if(data.code == 1){
+				
+					alert("其他错误")
+				
+				}
+				
+			}
+		
+		
+		console.log(data)
+		}
+			
+</script>
+</body>
+</html>
+
+
